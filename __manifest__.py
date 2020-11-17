@@ -24,7 +24,7 @@
     'version': '1.0',
 
     # any module necessary for this one to work correctly
-    'depends': ['base'],
+    'depends': ['base', 'account', 'accounting_pdf_reports', 'om_account_budget'],
 
     # always loaded
     'data': [
