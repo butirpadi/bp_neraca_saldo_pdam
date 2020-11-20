@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="neraca_accounting_pdf_reports_view_account_financial_report_form">
+            <field name="name">neraca.accounting_pdf_reports.view.account.financial.report.form</field>
+            <field name="model">account.financial.report</field>
+            <field name="inherit_id" ref="accounting_pdf_reports.view_account_financial_report_form"/>
+            <field name="priority">20</field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']/parent::group" position="after">
+                    <group>
+                        <group>
+                            <field name="represent_account_id" />
+                        </group>
+                        <group></group>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

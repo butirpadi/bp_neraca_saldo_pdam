@@ -1,0 +1,32 @@
+<odoo>
+    <data>
+        <record model="report.paperformat" id="bp_neraca_pdam_report_format">
+            <field name="name">Neraca Format</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="page_width">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">10</field>
+            <field name="margin_right">7</field>
+            <field name="margin_bottom">10</field>
+            <field name="margin_left">7</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">0</field>
+            <field name="dpi">96</field>
+        </record>
+
+        <report
+            id="action_report_neraca_saldo_pdam"
+            model="accounting.report.wizard"
+            string="Neraca Saldo"
+            report_type="qweb-pdf"
+            name="bp_neraca_saldo_pdam.neraca_saldo_pdam_template"
+            file="bp_neraca_saldo_pdam.neraca_saldo_pdam_template"
+            print_report_name="'Neraca_Saldo_' + str(object.date_from)  + '-' + str(object.date_to) + '_' + str(object.id)"
+            paperformat="bp_neraca_pdam_report_format"
+        />
+
+
+    </data>
+</odoo>

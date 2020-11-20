@@ -24,13 +24,16 @@
     'version': '1.0',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'account', 'accounting_pdf_reports', 'om_account_budget'],
+    'depends': ['base', 'account', 'accounting_pdf_reports', 'om_account_budget', 'om_account_accountant'],
 
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
         'views/res_company.xml',
-        # 'views/templates.x/ml',
+        'views/account_financial_report_view.xml',
+        'reports/report.xml',
+        'reports/neraca_saldo_report.xml',
+        'wizards/accounting_report_wizard_view.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

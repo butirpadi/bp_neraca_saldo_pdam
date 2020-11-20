@@ -1,0 +1,195 @@
+<odoo>
+    <data>
+        <template id="neraca_saldo_pdam_template">
+            <t t-call="web.basic_layout">
+                <t t-foreach="docs" t-as="doc">
+                    <div class="header" style="font-size;8pt;">
+
+                    </div>
+                    <div class="page" style="font-size:10pt;">
+                        <style>
+                            .header{ 
+                                font-size:8pt;
+                            }
+                            table.table-neraca thead tr th{
+                                vertical-align:middle;
+                            }
+                        </style>
+                        <t t-set="report_line" t-value="doc._get_report_line()" />
+                        <div>
+                            <div class="row">
+                                <div class="col-4" style="border-bottom:solid thin black;">
+                                    <span t-field="doc.company_id.name" />
+                                    <br/>
+                                    <span t-field="doc.company_id.street" />
+                                    <span t-if="doc.company_id.street2" t-field="doc.company_id.street2" />
+                                    <span t-if="doc.company_id.phone">Phone. </span>
+                                    <span t-if="doc.company_id.phone" t-field="doc.company_id.phone" />
+                                </div>
+                                <div class="col-4">
+                                </div>
+                                <div class="col-4"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <center>
+                                <h4>NERACA SALDO (KAS REKENING)</h4>
+                            </center>
+                        </div>
+
+                        <div>
+                            <table class="table table-bordered table-sm table-neraca">
+                                <thead>
+                                    <tr>
+                                        <th rowspan="2">
+                                            <center>
+                                                <span>Kode</span>
+                                                <br/>
+                                                <span>Perkiraan</span>
+                                            </center>
+                                        </th>
+                                        <th rowspan="2">
+                                            <center>
+                                                <span>Nama Perkiraan</span>
+                                                <br/>
+                                                <span>Buku Besar</span>
+                                            </center>
+                                        </th>
+                                        <th rowspan="2">
+                                            <center>
+                                                <span>Saldo</span>
+                                                <br/>
+                                                <span>Awal</span>
+                                            </center>
+                                        </th>
+                                        <th colspan="2">
+                                            <center>
+                                                <span>M U T A S I</span>
+                                            </center>
+                                        </th>
+                                        <th rowspan="2">
+                                            <center>
+                                                <span>Saldo</span>
+                                                <br/>
+                                                <span>Akhir</span>
+                                            </center>
+                                        </th>
+                                        <th colspan="4">
+                                            <center>
+                                                <span>A N G G A R A N</span>
+                                            </center>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            <center>
+                                                <span>Debet</span>
+                                            </center>
+                                        </th>
+                                        <th>
+                                            <center>
+                                                <span>Kredit</span>
+                                            </center>
+                                        </th>
+                                        <th>
+                                            <center>
+                                                <span>1 Bulan</span>
+                                            </center>
+                                        </th>
+                                        <th>
+                                            <center>
+                                                <span>% Pencap.</span>
+                                            </center>
+                                        </th>
+                                        <th>
+                                            <center>
+                                                <span>1 Tahun</span>
+                                            </center>
+                                        </th>
+                                        <th>
+                                            <center>
+                                                <span>% Pencap.</span>
+                                            </center>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <t t-set="rownum" t-value="1" />
+
+                                    <t t-foreach="report_line" t-as="line">
+                                        <t t-if="line['has_child'] and rownum > 1">
+                                            <tr>
+                                                <td>&amp;nbsp;</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </t>
+
+                                        <tr t-if="line['level'] &gt; 0">
+                                            <td>
+                                                <b t-if="line['is_parent']" t-esc="line['code']" />
+                                                <span t-if="not line['is_parent']" t-esc="line['code']" />
+                                            </td>
+                                            <td>
+                                                <b t-if="line['is_parent']" t-esc="line['name']" />
+                                                <span t-if="not line['is_parent']" t-esc="line['name']" />
+                                            </td>
+                                            <td class="text-right" >
+                                                <b t-if="line['is_parent']" t-esc="line['begining']" t-options='{"widget": "float", "precision": 2}'/>
+                                                <span t-if="not line['is_parent']" t-esc="line['begining']" t-options='{"widget": "float", "precision": 2}'/>
+                                            </td>
+                                            <td class="text-right">
+                                                <b t-if="line['is_parent']"  t-esc="line['debit']" t-options='{"widget": "float", "precision": 2}'/>
+                                                <span t-if="not line['is_parent']"  t-esc="line['debit']" t-options='{"widget": "float", "precision": 2}'/>
+                                            </td>
+                                            <td class="text-right">
+                                                <b t-if="line['is_parent']" t-esc="line['credit']" t-options='{"widget": "float", "precision": 2}'/>
+                                                <span t-if="not line['is_parent']"  t-esc="line['credit']" t-options='{"widget": "float", "precision": 2}'/>
+                                            </td>
+                                            <td class="text-right" >
+                                                <b t-if="line['is_parent']"  t-esc="line['ending']" t-options='{"widget": "float", "precision": 2}'/>
+                                                <span t-if="not line['is_parent']"  t-esc="line['ending']" t-options='{"widget": "float", "precision": 2}'/>
+                                            </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+
+                                        <t t-set="rownum" t-value="rownum+1" />
+                                    </t>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="footer">
+                        <div class="row" style="font-size:0.8em;">
+                            <div class="col-4">
+                                <span>Printed by </span>
+                                <b t-esc="user.name" />
+                            </div>
+                            <div class="col-4 text-center">
+                                <span class="page" style="background:black;color:white;padding:2px;" />
+                                <span> / </span>
+                                <span class="topage" />
+                            </div>
+                            <div class="col-4 text-right">
+                                <span>Printed at </span>
+                                <t t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y %H:%M')"/>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

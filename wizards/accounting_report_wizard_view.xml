@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="pdam_accounting_pdf_report_wizard_view" model="ir.ui.view">
+            <field name="name">accounting.report.wizard.view</field>
+            <field name="model">accounting.report.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="report_type"  />
+                            <field name="date_from" string="Date" />
+                        </group>
+                        <group>                            
+                            <field name="with_zero_balance" />
+                            <field name="month_period" readonly="1" />
+                            <field name="date_to" invisible="1" />
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="process_wizard" string="Process" type="object" class="oe_highlight" />
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window
+            id="pdam_accounting_pdf_report_wizard_action"
+            res_model="accounting.report.wizard"
+            name="Neraca Saldo"
+            view_mode="form"
+            multi="True"
+            target="new"
+            key2="client_action_multi"
+            context="{'default_report_type': 'saldo'}"
+        />
+
+        <menuitem
+            id="pdam_accounting_pdf_report_wizard_root_menu"
+            name="Neraca"
+            parent="account.menu_finance_reports"
+            sequence="1"/>
+            
+        <menuitem
+            id="neraca_saldo_menu"
+            name="Neraca Saldo"
+            action="pdam_accounting_pdf_report_wizard_action"
+            parent="pdam_accounting_pdf_report_wizard_root_menu"
+            sequence="1"/>
+    </data>
+</odoo>
