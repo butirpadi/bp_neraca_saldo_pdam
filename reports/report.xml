@@ -18,7 +18,7 @@
 
         <report
             id="action_report_neraca_saldo_pdam"
-            model="accounting.report.wizard"
+            model="neraca.saldo.wizard"
             string="Neraca Saldo"
             report_type="qweb-pdf"
             name="bp_neraca_saldo_pdam.neraca_saldo_pdam_template"

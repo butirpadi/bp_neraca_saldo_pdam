@@ -2,8 +2,8 @@
 <odoo>
     <data>
         <record id="pdam_accounting_pdf_report_wizard_view" model="ir.ui.view">
-            <field name="name">accounting.report.wizard.view</field>
-            <field name="model">accounting.report.wizard</field>
+            <field name="name">neraca.saldo.wizard.view</field>
+            <field name="model">neraca.saldo.wizard</field>
             <field name="arch" type="xml">
                 <form>
                     <group>
@@ -27,7 +27,7 @@
 
         <act_window
             id="pdam_accounting_pdf_report_wizard_action"
-            res_model="accounting.report.wizard"
+            res_model="neraca.saldo.wizard"
             name="Neraca Saldo"
             view_mode="form"
             multi="True"

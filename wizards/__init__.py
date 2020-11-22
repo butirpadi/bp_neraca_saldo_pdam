@@ -1,3 +1,3 @@
 # -*- coding: utf-8 -*-
 
-from . import accounting_report_wizard
+from . import neraca_saldo_wizard

@@ -34,6 +34,10 @@
                         <div>
                             <center>
                                 <h4>NERACA SALDO (KAS REKENING)</h4>
+                                <h5>
+                                    <span>Per </span>
+                                    <span t-esc="doc.date_to.strftime('%d %B %Y')" />
+                                </h5>
                             </center>
                         </div>
 
@@ -118,45 +122,33 @@
                                     <t t-set="rownum" t-value="1" />
 
                                     <t t-foreach="report_line" t-as="line">
-                                        <t t-if="line['has_child'] and rownum > 1">
-                                            <tr>
-                                                <td>&amp;nbsp;</td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                        </t>
-
                                         <tr t-if="line['level'] &gt; 0">
                                             <td>
                                                 <b t-if="line['is_parent']" t-esc="line['code']" />
                                                 <span t-if="not line['is_parent']" t-esc="line['code']" />
                                             </td>
                                             <td>
+                                                <t t-foreach="range(line['level'])" t-as="space">
+                                                    &amp;nbsp;&amp;nbsp;
+                                                </t>
                                                 <b t-if="line['is_parent']" t-esc="line['name']" />
                                                 <span t-if="not line['is_parent']" t-esc="line['name']" />
                                             </td>
-                                            <td class="text-right" >
+                                            <td class="text-right">
                                                 <b t-if="line['is_parent']" t-esc="line['begining']" t-options='{"widget": "float", "precision": 2}'/>
                                                 <span t-if="not line['is_parent']" t-esc="line['begining']" t-options='{"widget": "float", "precision": 2}'/>
                                             </td>
                                             <td class="text-right">
-                                                <b t-if="line['is_parent']"  t-esc="line['debit']" t-options='{"widget": "float", "precision": 2}'/>
-                                                <span t-if="not line['is_parent']"  t-esc="line['debit']" t-options='{"widget": "float", "precision": 2}'/>
+                                                <b t-if="line['is_parent']" t-esc="line['debit']" t-options='{"widget": "float", "precision": 2}'/>
+                                                <span t-if="not line['is_parent']" t-esc="line['debit']" t-options='{"widget": "float", "precision": 2}'/>
                                             </td>
                                             <td class="text-right">
                                                 <b t-if="line['is_parent']" t-esc="line['credit']" t-options='{"widget": "float", "precision": 2}'/>
-                                                <span t-if="not line['is_parent']"  t-esc="line['credit']" t-options='{"widget": "float", "precision": 2}'/>
+                                                <span t-if="not line['is_parent']" t-esc="line['credit']" t-options='{"widget": "float", "precision": 2}'/>
                                             </td>
-                                            <td class="text-right" >
-                                                <b t-if="line['is_parent']"  t-esc="line['ending']" t-options='{"widget": "float", "precision": 2}'/>
-                                                <span t-if="not line['is_parent']"  t-esc="line['ending']" t-options='{"widget": "float", "precision": 2}'/>
+                                            <td class="text-right">
+                                                <b t-if="line['is_parent']" t-esc="line['ending']" t-options='{"widget": "float", "precision": 2}'/>
+                                                <span t-if="not line['is_parent']" t-esc="line['ending']" t-options='{"widget": "float", "precision": 2}'/>
                                             </td>
                                             <td></td>
                                             <td></td>

@@ -33,7 +33,7 @@
         'views/account_financial_report_view.xml',
         'reports/report.xml',
         'reports/neraca_saldo_report.xml',
-        'wizards/accounting_report_wizard_view.xml',
+        'wizards/neraca_saldo_wizard_view.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
