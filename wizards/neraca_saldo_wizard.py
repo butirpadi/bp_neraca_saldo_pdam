@@ -145,6 +145,7 @@ class NeracaSaldoWizard(models.TransientModel):
                         'level': report_item.level,
                         'has_child': True
                     })
+                    vals.update(self._compute_report_balance(report_item))
                     report_line.append(vals.copy())
 
                     accounts = report_item.account_ids
@@ -154,11 +155,6 @@ class NeracaSaldoWizard(models.TransientModel):
                             'is_parent': False,
                             'code': acc.code,
                             'name': acc.name,
-                            # 'begining': 0,
-                            # 'debit': sum(account_move_lines.mapped('debit')),
-                            # 'credit': sum(account_move_lines.mapped('credit')),
-                            # 'balance': sum(account_move_lines.mapped('debit')) - sum(account_move_lines.mapped('credit')),
-                            # 'ending': 0,
                             'anggaran_bulan': 0,
                             'pencapaian_bulan': 0,
                             'anggaran_tahun': 0,
@@ -187,6 +183,7 @@ class NeracaSaldoWizard(models.TransientModel):
                         'level': report_item.level,
                         'has_child': True
                     })
+                    vals.update(self._compute_report_balance(report_item))
                     report_line.append(vals.copy())
 
                     accounts = self.env['account.account'].search(
@@ -204,11 +201,6 @@ class NeracaSaldoWizard(models.TransientModel):
                             'is_parent': False,
                             'code': acc.code,
                             'name': acc.name,
-                            # 'begining': 0,
-                            # 'debit': sum(account_move_lines.mapped('debit')),
-                            # 'credit': sum(account_move_lines.mapped('credit')),
-                            # 'balance': sum(account_move_lines.mapped('debit')) - sum(account_move_lines.mapped('credit')),
-                            # 'ending': 0,
                             'anggaran_bulan': 0,
                             'pencapaian_bulan': 0,
                             'anggaran_tahun': 0,
