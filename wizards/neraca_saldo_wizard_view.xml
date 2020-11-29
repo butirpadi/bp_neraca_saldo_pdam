@@ -8,12 +8,12 @@
                 <form>
                     <group>
                         <group>
-                            <field name="report_type"  />
                             <field name="date_from" string="Date" />
+                            <field name="report_type" invisible="1" />
                         </group>
                         <group>                            
-                            <field name="with_zero_balance" />
                             <field name="month_period" readonly="1" />
+                            <field name="with_zero_balance" />
                             <field name="date_to" invisible="1" />
                         </group>
                     </group>
