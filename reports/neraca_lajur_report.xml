@@ -1,0 +1,231 @@
+<odoo>
+    <data>
+        <template id="neraca_content">
+            <t t-set="report_line" t-value="doc._get_report_line()" />
+            <div>
+                <center>
+                    <h4 id="report-title">NERACA LAJUR</h4>
+                    <span id="report-sub-title" style="font-size:12pt;">
+                        <span>Per </span>
+                        <span t-esc="doc.date_to.strftime('%d %B %Y')" />
+                    </span>
+                </center>
+            </div>
+
+            <br/>
+
+            <div>
+                <table class="table table-borderless table-sm table-neraca">
+                    <thead>
+                        <tr>
+                            <th rowspan="2">
+                                <center>
+                                    <span>no</span>
+                                </center>
+                            </th>
+                            <th rowspan="2">
+                                <center>
+                                    <span>Nama Perkiraan</span>
+                                </center>
+                            </th>
+                            <th rowspan="2">
+                                <center>
+                                    <span>Kode</span>
+                                    <br/>
+                                    <span>Perkiraan</span>
+                                </center>
+                            </th>
+                            <th colspan="2">
+                                <center>
+                                    <span>saldo awal</span>
+                                </center>
+                            </th>
+                            <th colspan="2">
+                                <center>
+                                    <span>M U T A S I</span>
+                                </center>
+                            </th>
+                            <th colspan="2">
+                                <center>
+                                    <span>neraca saldo</span>
+                                </center>
+                            </th>
+                            <th colspan="2">
+                                <center>
+                                    <span>laba/rugi</span>
+                                </center>
+                            </th>
+                            <th colspan="2">
+                                <center>
+                                    <span>neraca keuangan</span>
+                                </center>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>
+                                <center>
+                                    <span>Debet</span>
+                                </center>
+                            </th>
+                            <th>
+                                <center>
+                                    <span>Kredit</span>
+                                </center>
+                            </th>
+                            <th>
+                                <center>
+                                    <span>debet</span>
+                                </center>
+                            </th>
+                            <th>
+                                <center>
+                                    <span>kredit</span>
+                                </center>
+                            </th>
+                            <th>
+                                <center>
+                                    <span>debet</span>
+                                </center>
+                            </th>
+                            <th>
+                                <center>
+                                    <span>kredit</span>
+                                </center>
+                            </th>
+                            <th>
+                                <center>
+                                    <span>debet</span>
+                                </center>
+                            </th>
+                            <th>
+                                <center>
+                                    <span>kredit</span>
+                                </center>
+                            </th>
+                            <th>
+                                <center>
+                                    <span>debet</span>
+                                </center>
+                            </th>
+                            <th>
+                                <center>
+                                    <span>kredit</span>
+                                </center>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <t t-set="rownum" t-value="1" />
+
+                        <t t-foreach="report_line" t-as="line">
+
+                            <tr t-if="line['level'] &gt; 0">
+                                <td class="text-right">
+                                    <span t-esc="rownum" />
+                                </td>
+                                <td>
+                                    <span t-esc="line['name']" />
+                                </td>
+                                <td>
+                                    <span t-esc="line['code']" />
+                                </td>
+                                <td class="text-right">
+                                    <span t-if="line['begining_debit'] != 0" t-esc="line['begining_debit']" t-options='{"widget": "float", "precision": 2}'/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-if="line['begining_credit'] != 0" t-esc="line['begining_credit']" t-options='{"widget": "float", "precision": 2}'/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-if="line['debit'] != 0" t-esc="line['debit']" t-options='{"widget": "float", "precision": 2}'/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-if="line['credit'] != 0" t-esc="line['credit']" t-options='{"widget": "float", "precision": 2}'/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-if="line['ending_debit'] != 0" t-esc="line['ending_debit']" t-options='{"widget": "float", "precision": 2}'/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-if="line['ending_credit'] != 0" t-esc="line['ending_credit']" t-options='{"widget": "float", "precision": 2}'/>
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <t t-set="rownum" t-value="rownum+1" />
+                            </tr>
+                        </t>
+
+                        <tr class="footer">
+                            <td colspan="3">
+                                &amp;nbsp;
+                            </td>
+                            <td class="text-right">                                
+                                <t t-esc="report_line[0]['begining_debit']" t-options='{"widget": "float", "precision": 2}'/>
+                            </td>
+                            <td class="text-right">
+                                <t t-esc="report_line[0]['begining_credit']" t-options='{"widget": "float", "precision": 2}'/>
+                            </td>
+                            <td class="text-right">
+                                <t t-esc="report_line[0]['debit']" t-options='{"widget": "float", "precision": 2}'/>
+                            </td>
+                            <td class="text-right">
+                                <t t-esc="report_line[0]['credit']" t-options='{"widget": "float", "precision": 2}'/>
+                            </td>
+                            <td class="text-right">
+                                <t t-esc="report_line[0]['ending_debit']" t-options='{"widget": "float", "precision": 2}'/>
+                            </td>
+                            <td class="text-right">
+                                <t t-esc="report_line[0]['ending_credit']" t-options='{"widget": "float", "precision": 2}'/>
+                            </td>
+                            <td class="text-right"></td>
+                            <td class="text-right"></td>
+                            <td class="text-right"></td>
+                            <td class="text-right"></td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </template>
+
+        <template id="neraca_lajur_pdam_template">
+            <t t-call="web.basic_layout">
+                <t t-foreach="docs" t-as="doc">
+                    <div class="header" style="font-size;8pt;">
+
+                    </div>
+                    <div class="page" style="font-size:10pt;">
+                        <style>
+                            .header{ 
+                                font-size:8pt;
+                            }
+                            table.table-neraca thead tr th{
+                                vertical-align:middle;
+                                border-top:thin solid black;
+                                border-bottom:thin solid black !important;
+                                border-right:solid 2px white !important;
+                                text-transform:uppercase;
+                            }
+
+                            <!-- table.table-neraca tbody tr td{
+                                font-family: 'Ubuntu Condensed';
+                            } -->
+
+                            table.table-neraca tbody tr.footer td{
+                                border-top:thin solid black;
+                                border-bottom:thin solid black;
+                                border-right:solid 2px white !important;
+                                font-weight:bolder;
+                            }
+                        </style>
+
+                        <t t-call="bp_neraca_saldo_pdam.neraca_header" />
+                        <t t-call="bp_neraca_saldo_pdam.neraca_content" />
+                    </div>
+                    <t t-call="bp_neraca_saldo_pdam.neraca_footer" />
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

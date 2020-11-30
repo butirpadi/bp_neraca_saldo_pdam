@@ -32,8 +32,12 @@
         'views/res_company.xml',
         'views/account_financial_report_view.xml',
         'reports/report.xml',
+        'reports/neraca_base_report.xml',
         'reports/neraca_saldo_report.xml',
+        'reports/neraca_lajur_report.xml',
+        'reports/neraca_lajur_report_html.xml',
         'wizards/neraca_saldo_wizard_view.xml',
+        'wizards/neraca_lajur_wizard_view.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

@@ -1,0 +1,41 @@
+<odoo>
+    <data>
+        <template id="neraca_header">
+            <div>
+                <div class="row">
+                    <div class="col-4" style="border-bottom:solid thin black;">
+                        <span t-field="doc.company_id.name" />
+                        <br/>
+                        <span t-field="doc.company_id.street" />
+                        <span t-if="doc.company_id.street2" t-field="doc.company_id.street2" />
+                        <span t-if="doc.company_id.phone">Phone. </span>
+                        <span t-if="doc.company_id.phone" t-field="doc.company_id.phone" />
+                    </div>
+                    <div class="col-4">
+                    </div>
+                    <div class="col-4"></div>
+                </div>
+            </div>
+        </template>
+
+        <template id="neraca_footer">
+            <div class="footer">
+                <div class="row" style="font-size:0.8em;">
+                    <div class="col-4">
+                        <span>Printed by </span>
+                        <b t-esc="user.name" />
+                    </div>
+                    <div class="col-4 text-center">
+                        <span class="page" style="background:black;color:white;padding:2px;" />
+                        <span> / </span>
+                        <span class="topage" />
+                    </div>
+                    <div class="col-4 text-right">
+                        <span>Printed at </span>
+                        <t t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y %H:%M')"/>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </data>
+</odoo>

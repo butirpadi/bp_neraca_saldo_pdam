@@ -26,6 +26,28 @@
             print_report_name="'Neraca_Saldo_' + str(object.date_from)  + '-' + str(object.date_to) + '_' + str(object.id)"
             paperformat="bp_neraca_pdam_report_format"
         />
+        
+        <report
+            id="action_report_neraca_lajur_pdam"
+            model="neraca.lajur.wizard"
+            string="Neraca Lajur"
+            report_type="qweb-pdf"
+            name="bp_neraca_saldo_pdam.neraca_lajur_pdam_template"
+            file="bp_neraca_saldo_pdam.neraca_lajur_pdam_template"
+            print_report_name="'Neraca_Lajur' + str(object.month_period)  + '-' + str(object.date_to) + '_' + str(object.id)"
+            paperformat="bp_neraca_pdam_report_format"
+        />
+        
+        <report
+            id="action_report_neraca_lajur_pdam_html"
+            model="neraca.lajur.wizard"
+            string="Neraca Lajur"
+            report_type="qweb-html"
+            name="bp_neraca_saldo_pdam.neraca_lajur_pdam_template_html"
+            file="bp_neraca_saldo_pdam.neraca_lajur_pdam_template_html"
+            print_report_name="'Neraca_Lajur' + str(object.month_period)  + '-' + str(object.date_to) + '_' + str(object.id)"
+            paperformat="bp_neraca_pdam_report_format"
+        />
 
 
     </data>

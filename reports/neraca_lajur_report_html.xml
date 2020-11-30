@@ -1,0 +1,38 @@
+<odoo>
+    <data>
+        <template id="neraca_lajur_pdam_template_html">
+            <t t-call="web.basic_layout">
+                <t t-foreach="docs" t-as="doc">
+                    <div class="page" style="font-size:10pt;">
+                        <style>
+                            .header{ 
+                                font-size:8pt;
+                            }
+                            table.table-neraca thead tr th{
+                                vertical-align:middle;
+                                border-top:thin solid black;
+                                border-bottom:thin solid black !important;
+                                border-right:solid 2px white !important;
+                                text-transform:uppercase;
+                            }
+
+                            table.table-neraca tbody tr.footer td{
+                                border-top:thin solid black;
+                                border-bottom:thin solid black;
+                            }
+                            #report-title{
+                                font-size:12pt;
+                            }
+                            #report-sub-title{
+                                font-size:12pt;
+                            }
+                        </style>
+                        <div style="padding:10px;background-color:whitesmoke;">
+                            <t t-call="bp_neraca_saldo_pdam.neraca_content" />
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="pdam_neraca_lajur_report_wizard_view" model="ir.ui.view">
+            <field name="name">neraca.lajur.wizard.view</field>
+            <field name="model">neraca.lajur.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="date_period" string="Date" />
+                        </group>
+                        <group>                            
+                            <field name="month_period" readonly="1" />
+                            <field name="with_zero_balance" />
+                        </group>
+                    </group>
+                    <footer>
+                        <!-- <button name="process_wizard" string="Submit" type="object" class="oe_highlight"  /> -->
+                        <button name="action_pdf" string="PDF" type="object" />
+                        <!-- <button name="action_excel" string="Excel" type="object"  /> -->
+                        <button string="Cancel" special="cancel"  />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window
+            id="pdam_neraca_lajur_wizard_view_action"
+            res_model="neraca.lajur.wizard"
+            name="Neraca Lajur"
+            view_mode="form"
+            multi="True"
+            target="new"
+            key2="client_action_multi"
+            context="{'default_report_type': 'lajur'}"
+        />
+            
+        <menuitem
+            id="neraca_lajur_menu"
+            name="Neraca Lajur"
+            action="pdam_neraca_lajur_wizard_view_action"
+            parent="pdam_accounting_pdf_report_wizard_root_menu"
+            sequence="2"/>
+    </data>
+</odoo>
