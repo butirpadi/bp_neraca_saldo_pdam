@@ -71,6 +71,10 @@ class NeracaLajurWizard(models.TransientModel):
             'credit': 0,
             'ending_debit': 0,
             'ending_credit': 0,
+            'lr_debit': 0,
+            'lr_credit': 0,
+            'neraca_debit': 0,
+            'neraca_credit': 0,
         }
         fields = {'begining_debit','begining_credit', 'debit', 'credit',  'ending_debit', 'ending_credit'}
 
@@ -94,6 +98,18 @@ class NeracaLajurWizard(models.TransientModel):
             for field in fields:
                 res[field] = res[field] + new_res[field]
 
+        if report.post_to == 'lr':
+            res.update({
+                'lr_debit' : res['ending_debit'],
+                'lr_credit' : res['ending_credit'],
+            })
+        elif report.post_to == 'neraca':
+            res.update({
+                'neraca_debit' : res['ending_debit'],
+                'neraca_credit' : res['ending_credit'],
+            })
+        pprint(res)
+        print('---------------------------------------')
         return res
 
     def _get_report_line(self):

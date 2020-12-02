@@ -8,11 +8,13 @@
             <field name="priority">20</field>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='name']/parent::group" position="after">
-                    <group>
+                    <group string="Worksheet Options" >
                         <group>
                             <field name="represent_account_id" />
+                            <field name="post_to" widget="radio" />
                         </group>
-                        <group></group>
+                        <group>
+                        </group>
                     </group>
                 </xpath>
             </field>
