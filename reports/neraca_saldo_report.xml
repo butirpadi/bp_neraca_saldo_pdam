@@ -168,10 +168,23 @@
                                                 <b t-if="line['is_parent']" t-esc="line['ending']" t-options='{"widget": "float", "precision": 2}'/>
                                                 <span t-if="not line['is_parent']" t-esc="line['ending']" t-options='{"widget": "float", "precision": 2}'/>
                                             </td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <td class="text-right">
+                                                <b t-if="line['is_parent']" t-esc="line['bulan']" t-options='{"widget": "float", "precision": 2}'/>
+                                                <span t-if="not line['is_parent']" t-esc="line['bulan']" t-options='{"widget": "float", "precision": 2}'/>
+                                            </td>
+                                            <td class="text-right">
+                                                <b t-if="line['is_parent']" t-esc="line['per_bulan']" t-options='{"widget": "float", "precision": 2}'/>
+                                                <span t-if="not line['is_parent']" t-esc="line['per_bulan']" t-options='{"widget": "float", "precision": 2}'/>
+                                            </td>
+                                            <td class="text-right">
+                                                <b t-if="line['is_parent']" t-esc="line['tahun']" t-options='{"widget": "float", "precision": 2}'/>
+                                                <span t-if="not line['is_parent']" t-esc="line['tahun']" t-options='{"widget": "float", "precision": 2}'/>
+                                            </td>
+                                            <td class="text-right">
+                                                <b t-if="line['is_parent']" t-esc="line['per_tahun']" t-options='{"widget": "float", "precision": 2}'/>
+                                                <span t-if="not line['is_parent']" t-esc="line['per_tahun']" t-options='{"widget": "float", "precision": 2}'/>
+                                            </td>
+                                            
                                         </tr>
 
                                         <t t-set="rownum" t-value="rownum+1" />

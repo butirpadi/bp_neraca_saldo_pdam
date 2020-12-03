@@ -25,6 +25,10 @@ class NeracaSaldoWizard(models.TransientModel):
     with_zero_balance = fields.Boolean(
         string='With zero balance', default=True)
     month_period = fields.Char(string='Month Periode')
+    budget_plan_id = fields.Many2one(
+        comodel_name='bp.simple.budget',
+        string='Budget Plan'
+    )
 
     @api.onchange('date_from')
     def onchange_date_from(self):
@@ -35,6 +39,8 @@ class NeracaSaldoWizard(models.TransientModel):
     def _compute_account_balance(self, account):
         res = []
         fields = {'beginig', 'debit', 'credit', 'balance', 'ending'}
+        budget_fields = ['bg_jan', 'bg_feb', 'bg_mar', 'bg_apr', 'bg_may',
+                         'bg_jun', 'bg_jul', 'bg_aug', 'bg_sept', 'bg_oct', 'bg_nov', 'bg_dec']
         account_move_lines = self.env['account.move.line'].search([
             '&', '&', '&',
             ('move_id.state', '=', 'posted'),
@@ -48,11 +54,30 @@ class NeracaSaldoWizard(models.TransientModel):
             ('date', '<', self.date_from),
             ('account_id', '=', account.id)
         ])
+
+        budget_line = self.budget_plan_id.line_ids.filtered(
+            lambda x: x.account_id.id == account.id)
+        bulan = 0
+        per_bulan = 0
+        tahun = 0
+        per_tahun = 0
+
+        if budget_line:
+            bulan = budget_line[budget_fields[self.date_from.month - 1]]
+            per_bulan = 100 * sum(account_move_lines.mapped('balance')) / budget_line[budget_fields[self.date_from.month - 1]]
+            tahun = budget_line.annual_amount
+            per_tahun = 100 * (sum(begining_move_lines.mapped('balance')) + sum(account_move_lines.mapped('balance'))) / budget_line.annual_amount
+
+
         res = {
             'begining': sum(begining_move_lines.mapped('balance')),
             'debit': sum(account_move_lines.mapped('debit')),
             'credit': sum(account_move_lines.mapped('credit')),
             'ending': sum(begining_move_lines.mapped('balance')) + sum(account_move_lines.mapped('balance')),
+            'bulan':  bulan,
+            'per_bulan': per_bulan,
+            'tahun':  tahun,
+            'per_tahun': per_tahun
         }
         return res
 
@@ -62,8 +87,13 @@ class NeracaSaldoWizard(models.TransientModel):
             'debit': 0,
             'credit': 0,
             'ending': 0,
+            'bulan': 0,
+            'per_bulan': 0,
+            'tahun': 0,
+            'per_tahun': 0
         }
-        fields = ['begining', 'debit', 'credit', 'ending']
+        fields = ['begining', 'debit', 'credit',
+                  'ending', 'bulan', 'tahun', 'per_bulan', 'per_tahun']
 
         if report.type == 'sum':
             for child in report.children_ids:
@@ -111,10 +141,10 @@ class NeracaSaldoWizard(models.TransientModel):
                     'credit': 0,
                     'balance': 0,
                     'ending': 0,
-                    'anggaran_bulan': 0,
-                    'pencapaian_bulan': 0,
-                    'anggaran_tahun': 0,
-                    'pencapaian_tahun': 0,
+                    'bulan': 0,
+                    'tahun': 0,
+                    'per_bulan': 0,
+                    'per_tahun': 0,
                     'level': report_item.level,
                     'has_child': False
                 }
@@ -138,10 +168,10 @@ class NeracaSaldoWizard(models.TransientModel):
                         'credit': 0,
                         'balance': 0,
                         'ending': 0,
-                        'anggaran_bulan': 0,
-                        'pencapaian_bulan': 0,
-                        'anggaran_tahun': 0,
-                        'pencapaian_tahun': 0,
+                        'bulan': 0,
+                        'tahun': 0,
+                        'per_bulan': 0,
+                        'per_tahun': 0,
                         'level': report_item.level,
                         'has_child': True
                     })
@@ -155,10 +185,10 @@ class NeracaSaldoWizard(models.TransientModel):
                             'is_parent': False,
                             'code': acc.code,
                             'name': acc.name,
-                            'anggaran_bulan': 0,
-                            'pencapaian_bulan': 0,
-                            'anggaran_tahun': 0,
-                            'pencapaian_tahun': 0,
+                            'bulan': 0,
+                            'per_bulan': 0,
+                            'tahun': 0,
+                            'per_tahun': 0,
                             'level': report_item.level,
                             'has_child': False
                         })
@@ -176,10 +206,10 @@ class NeracaSaldoWizard(models.TransientModel):
                         'credit': 0,
                         'balance': 0,
                         'ending': 0,
-                        'anggaran_bulan': 0,
-                        'pencapaian_bulan': 0,
-                        'anggaran_tahun': 0,
-                        'pencapaian_tahun': 0,
+                        'bulan': 0,
+                        'per_bulan': 0,
+                        'tahun': 0,
+                        'per_tahun': 0,
                         'level': report_item.level,
                         'has_child': True
                     })
@@ -201,10 +231,10 @@ class NeracaSaldoWizard(models.TransientModel):
                             'is_parent': False,
                             'code': acc.code,
                             'name': acc.name,
-                            'anggaran_bulan': 0,
-                            'pencapaian_bulan': 0,
-                            'anggaran_tahun': 0,
-                            'pencapaian_tahun': 0,
+                            'bulan': 0,
+                            'per_bulan': 0,
+                            'tahun': 0,
+                            'per_tahun': 0,
                             'level': report_item.level,
                             'has_child': False
                         })
