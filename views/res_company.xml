@@ -16,6 +16,7 @@
 							</group>
 							<group>
 								<field name="laba_rugi_report_id" domain="[('parent_id','=',False)]" />
+								<field name="add_space_level"  />
 							</group>
 						</group>
 					</page>

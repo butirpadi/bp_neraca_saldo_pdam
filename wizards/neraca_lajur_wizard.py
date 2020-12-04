@@ -32,11 +32,16 @@ class NeracaLajurWizard(models.TransientModel):
 
     def _compute_account_balance(self, account):
         res = []
-        fields = {'begining_debit','begining_credit', 'debit', 'credit',  'ending_debit', 'ending_credit'}
-        
+        fields = {'begining_debit', 'begining_credit', 'debit',
+                  'credit',  'ending_debit', 'ending_credit'}
+
+        fiscalyear_last_date = datetime.datetime(
+            year=self.date_from.year-1, month=self.company_id.fiscalyear_last_month, day=self.company_id.fiscalyear_last_day).date()
+
         begining_move_lines = self.env['account.move.line'].search([
-            '&', '&',
+            '&', '&', '&',
             ('move_id.state', '=', 'posted'),
+            ('date', '>', fiscalyear_last_date),
             ('date', '<', self.date_from),
             ('account_id', '=', account.id)
         ])
@@ -76,7 +81,8 @@ class NeracaLajurWizard(models.TransientModel):
             'neraca_debit': 0,
             'neraca_credit': 0,
         }
-        fields = {'begining_debit','begining_credit', 'debit', 'credit',  'ending_debit', 'ending_credit'}
+        fields = {'begining_debit', 'begining_credit', 'debit',
+                  'credit',  'ending_debit', 'ending_credit'}
 
         if report.type == 'sum':
             for child in report.children_ids:
@@ -100,16 +106,18 @@ class NeracaLajurWizard(models.TransientModel):
 
         if report.post_to == 'lr':
             res.update({
-                'lr_debit' : res['ending_debit'],
-                'lr_credit' : res['ending_credit'],
+                'lr_debit': res['ending_debit'],
+                'lr_credit': res['ending_credit'],
             })
         elif report.post_to == 'neraca':
             res.update({
-                'neraca_debit' : res['ending_debit'],
-                'neraca_credit' : res['ending_credit'],
+                'neraca_debit': res['ending_debit'],
+                'neraca_credit': res['ending_credit'],
             })
-        pprint(res)
-        print('---------------------------------------')
+
+        # add sign
+        res['sign'] = report.sign
+        
         return res
 
     def _get_report_line(self):
@@ -132,7 +140,6 @@ class NeracaLajurWizard(models.TransientModel):
                 'begining_credit': 0,
                 'debit': 0,
                 'credit': 0,
-                
                 'ending_debit': 0,
                 'ending_credit': 0,
                 'lr_debit': 0,
@@ -140,7 +147,8 @@ class NeracaLajurWizard(models.TransientModel):
                 'neraca_debit': 0,
                 'neraca_credit': 0,
                 'level': report_item.level,
-                'has_child': False
+                'has_child': False,
+                'sign' : report_item.sign
             }
 
             if len(report_item.children_ids) > 0:
@@ -161,7 +169,7 @@ class NeracaLajurWizard(models.TransientModel):
                     'begining_credit': 0,
                     'debit': 0,
                     'credit': 0,
-                    
+
                     'ending_debit': 0,
                     'ending_credit': 0,
                     'lr_debit': 0,
@@ -182,7 +190,7 @@ class NeracaLajurWizard(models.TransientModel):
                     'begining_credit': 0,
                     'debit': 0,
                     'credit': 0,
-                    
+
                     'ending_debit': 0,
                     'ending_credit': 0,
                     'lr_debit': 0,

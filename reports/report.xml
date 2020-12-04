@@ -15,6 +15,22 @@
             <field name="header_spacing">0</field>
             <field name="dpi">96</field>
         </record>
+        
+        <record model="report.paperformat" id="bp_neraca_pdam_report_format_a3">
+            <field name="name">Neraca A3</field>
+            <field name="default" eval="True"/>
+            <field name="format">A3</field>
+            <field name="page_width">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">10</field>
+            <field name="margin_right">10</field>
+            <field name="margin_bottom">10</field>
+            <field name="margin_left">10</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">0</field>
+            <field name="dpi">96</field>
+        </record>
 
         <report
             id="action_report_neraca_saldo_pdam"
@@ -47,6 +63,17 @@
             file="bp_neraca_saldo_pdam.neraca_lajur_pdam_template_html"
             print_report_name="'Neraca_Lajur' + str(object.month_period)  + '-' + str(object.date_to) + '_' + str(object.id)"
             paperformat="bp_neraca_pdam_report_format"
+        />
+        
+        <report
+            id="action_report_pencapaian_laba_rugi"
+            model="pencapaian.laba.rugi.wizard"
+            string="Pencapaian Laba/Rugi"
+            report_type="qweb-pdf"
+            name="bp_neraca_saldo_pdam.bp_pencapaian_laba_rugi_report_template"
+            file="bp_neraca_saldo_pdam.bp_pencapaian_laba_rugi_report_template"
+            print_report_name="'Pencapaian_Laba_Rugi_' + str(object.month_period)  + '-' + str(object.date_select) + '_' + str(object.id)"
+            paperformat="bp_neraca_pdam_report_format_a3"
         />
 
 

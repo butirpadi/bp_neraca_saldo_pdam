@@ -40,7 +40,11 @@ class NeracaSaldoWizard(models.TransientModel):
         res = []
         fields = {'beginig', 'debit', 'credit', 'balance', 'ending'}
         budget_fields = ['bg_jan', 'bg_feb', 'bg_mar', 'bg_apr', 'bg_may',
-                         'bg_jun', 'bg_jul', 'bg_aug', 'bg_sept', 'bg_oct', 'bg_nov', 'bg_dec']
+                         'bg_jun', 'bg_jul', 'bg_aug', 'bg_sep', 'bg_oct', 'bg_nov', 'bg_dec']
+        fiscalyear_last_date = datetime.datetime(
+                year=self.date_from.year-1, month=self.company_id.fiscalyear_last_month, day=self.company_id.fiscalyear_last_day).date()
+
+        
         account_move_lines = self.env['account.move.line'].search([
             '&', '&', '&',
             ('move_id.state', '=', 'posted'),
@@ -49,24 +53,26 @@ class NeracaSaldoWizard(models.TransientModel):
             ('account_id', '=', account.id)
         ])
         begining_move_lines = self.env['account.move.line'].search([
-            '&', '&',
+            '&', '&', '&',
             ('move_id.state', '=', 'posted'),
+            ('date', '>', fiscalyear_last_date),
             ('date', '<', self.date_from),
             ('account_id', '=', account.id)
         ])
 
-        budget_line = self.budget_plan_id.line_ids.filtered(
-            lambda x: x.account_id.id == account.id)
         bulan = 0
         per_bulan = 0
         tahun = 0
         per_tahun = 0
 
-        if budget_line:
-            bulan = budget_line[budget_fields[self.date_from.month - 1]]
-            per_bulan = 100 * sum(account_move_lines.mapped('balance')) / budget_line[budget_fields[self.date_from.month - 1]]
-            tahun = budget_line.annual_amount
-            per_tahun = 100 * (sum(begining_move_lines.mapped('balance')) + sum(account_move_lines.mapped('balance'))) / budget_line.annual_amount
+        if account_move_lines or begining_move_lines:
+            budget_line = self.budget_plan_id.line_ids.filtered(
+                lambda x: x.account_id.id == account.id)
+            if budget_line:
+                bulan = budget_line[budget_fields[self.date_from.month - 1]]
+                per_bulan = 100 * abs(sum(account_move_lines.mapped('balance'))) / budget_line[budget_fields[self.date_from.month - 1]]
+                tahun = budget_line.annual_amount
+                per_tahun = 100 * abs(sum(begining_move_lines.mapped('balance')) + sum(account_move_lines.mapped('balance'))) / budget_line.annual_amount
 
 
         res = {
@@ -115,6 +121,9 @@ class NeracaSaldoWizard(models.TransientModel):
             for field in fields:
                 res[field] = res[field] + new_res[field]
 
+        # add sign
+        res['sign'] = report.sign
+        
         return res
 
     def _get_report_line(self):
@@ -124,12 +133,12 @@ class NeracaSaldoWizard(models.TransientModel):
             report_line = []
 
             acc_financial_report = self.company_id.neraca_saldo_report_id
-            account_move_lines = self.env['account.move.line'].search([
-                '&', '&',
-                ('move_id.state', '=', 'posted'),
-                ('date', '>=', self.date_from),
-                ('date', '<=', self.date_to),
-            ])
+            # account_move_lines = self.env['account.move.line'].search([
+            #     '&', '&',
+            #     ('move_id.state', '=', 'posted'),
+            #     ('date', '>=', self.date_from),
+            #     ('date', '<=', self.date_to),
+            # ])
             # bikinan sendiri
             for report_item in acc_financial_report._get_children_by_order():
                 vals = {
@@ -146,7 +155,8 @@ class NeracaSaldoWizard(models.TransientModel):
                     'per_bulan': 0,
                     'per_tahun': 0,
                     'level': report_item.level,
-                    'has_child': False
+                    'has_child': False,
+                    'sign' : report_item.sign
                 }
 
                 if len(report_item.children_ids) > 0:
@@ -220,13 +230,13 @@ class NeracaSaldoWizard(models.TransientModel):
                         [('user_type_id', 'in', report_item.account_type_ids.ids)])
 
                     for acc in accounts:
-                        account_move_lines = self.env['account.move.line'].search([
-                            '&', '&', '&',
-                            ('move_id.state', '=', 'posted'),
-                            ('date', '>=', self.date_from),
-                            ('date', '<=', self.date_to),
-                            ('account_id', '=', acc.id)
-                        ])
+                        # account_move_lines = self.env['account.move.line'].search([
+                        #     '&', '&', '&',
+                        #     ('move_id.state', '=', 'posted'),
+                        #     ('date', '>=', self.date_from),
+                        #     ('date', '<=', self.date_to),
+                        #     ('account_id', '=', acc.id)
+                        # ])
                         vals.update({
                             'is_parent': False,
                             'code': acc.code,

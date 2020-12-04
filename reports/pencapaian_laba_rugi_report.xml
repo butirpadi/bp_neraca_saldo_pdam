@@ -1,6 +1,6 @@
 <odoo>
     <data>
-        <template id="neraca_saldo_pdam_template">
+        <template id="bp_pencapaian_laba_rugi_report_template">
             <t t-call="web.basic_layout">
                 <t t-foreach="docs" t-as="doc">
                     <div class="header" style="font-size;8pt;">
@@ -15,28 +15,19 @@
                                 vertical-align:middle;
                             }
                         </style>
+
+                        <br/>
+                        <t t-call="bp_neraca_saldo_pdam.neraca_header" />
+                        <br/>
+
                         <t t-set="report_line" t-value="doc._get_report_line()" />
-                        <div>
-                            <div class="row">
-                                <div class="col-4" style="border-bottom:solid thin black;">
-                                    <span t-field="doc.company_id.name" />
-                                    <br/>
-                                    <span t-field="doc.company_id.street" />
-                                    <span t-if="doc.company_id.street2" t-field="doc.company_id.street2" />
-                                    <span t-if="doc.company_id.phone">Phone. </span>
-                                    <span t-if="doc.company_id.phone" t-field="doc.company_id.phone" />
-                                </div>
-                                <div class="col-4">
-                                </div>
-                                <div class="col-4"></div>
-                            </div>
-                        </div>
+
                         <div>
                             <center>
-                                <h4>NERACA SALDO (KAS REKENING)</h4>
+                                <h4>PENCAPAIAN RUGI LABA TERHADAP ANGGARAN</h4>
                                 <h5>
-                                    <span>Per </span>
-                                    <span t-esc="doc.date_to.strftime('%d %B %Y')" />
+                                    <span>BULAN : </span>
+                                    <span style="text-transform:uppercase;" t-esc="doc.date_select.strftime('%B %Y')" />
                                 </h5>
                             </center>
                         </div>
@@ -59,60 +50,58 @@
                                                 <span>Buku Besar</span>
                                             </center>
                                         </th>
+                                        <th colspan="3">
+                                            <center>
+                                                <span>Bulan Ini</span>
+                                            </center>
+                                        </th>
+                                        <th colspan="3">
+                                            <center>
+                                                <span>Sampai dengan Bulan ini</span>
+                                            </center>
+                                        </th>
                                         <th rowspan="2">
                                             <center>
-                                                <span>Saldo</span>
+                                                <span>Anggaran</span>
                                                 <br/>
-                                                <span>Awal</span>
-                                            </center>
-                                        </th>
-                                        <th colspan="2">
-                                            <center>
-                                                <span>M U T A S I</span>
+                                                <span>1 Tahun</span>
                                             </center>
                                         </th>
                                         <th rowspan="2">
                                             <center>
-                                                <span>Saldo</span>
-                                                <br/>
-                                                <span>Akhir</span>
-                                            </center>
-                                        </th>
-                                        <th colspan="4">
-                                            <center>
-                                                <span>A N G G A R A N</span>
+                                                <span>Pencapaian</span>
                                             </center>
                                         </th>
                                     </tr>
                                     <tr>
                                         <th>
                                             <center>
-                                                <span>Debet</span>
+                                                <span>Realisasi</span>
                                             </center>
                                         </th>
                                         <th>
                                             <center>
-                                                <span>Kredit</span>
+                                                <span>Anggaran</span>
                                             </center>
                                         </th>
                                         <th>
                                             <center>
-                                                <span>1 Bulan</span>
+                                                <span>Pencp.</span>
                                             </center>
                                         </th>
                                         <th>
                                             <center>
-                                                <span>% Pencap.</span>
+                                                <span>Realisasi</span>
                                             </center>
                                         </th>
                                         <th>
                                             <center>
-                                                <span>1 Tahun</span>
+                                                <span>Anggaran</span>
                                             </center>
                                         </th>
                                         <th>
                                             <center>
-                                                <span>% Pencap.</span>
+                                                <span>Pencp.</span>
                                             </center>
                                         </th>
                                     </tr>
@@ -153,38 +142,49 @@
                                                 <span t-if="not line['is_parent']" t-esc="line['name']" />
                                             </td>
                                             <td class="text-right">
-                                                <b t-if="line['is_parent']" t-esc="line['begining'] * line['sign']" t-options='{"widget": "float", "precision": 2}'/>
-                                                <span t-if="not line['is_parent']" t-esc="line['begining'] * line['sign']" t-options='{"widget": "float", "precision": 2}'/>
+                                                <b t-if="line['is_parent']" t-esc="line['realisasi_bulan'] * line['sign']" t-options='{"widget": "float", "precision": 2}'/>
+                                                <span t-if="not line['is_parent']" t-esc="line['realisasi_bulan'] * line['sign']" t-options='{"widget": "float", "precision": 2}'/>
                                             </td>
                                             <td class="text-right">
-                                                <b t-if="line['is_parent']" t-esc="line['debit'] * line['sign']" t-options='{"widget": "float", "precision": 2}'/>
-                                                <span t-if="not line['is_parent']" t-esc="line['debit'] * line['sign']" t-options='{"widget": "float", "precision": 2}'/>
+                                                <b t-if="line['is_parent']" t-esc="line['anggaran_bulan']" t-options='{"widget": "float", "precision": 2}'/>
+                                                <span t-if="not line['is_parent']" t-esc="line['anggaran_bulan']" t-options='{"widget": "float", "precision": 2}'/>
                                             </td>
                                             <td class="text-right">
-                                                <b t-if="line['is_parent']" t-esc="line['credit'] * line['sign']" t-options='{"widget": "float", "precision": 2}'/>
-                                                <span t-if="not line['is_parent']" t-esc="line['credit'] * line['sign']" t-options='{"widget": "float", "precision": 2}'/>
+
+                                                <t t-if="line['is_parent']">
+                                                    <t t-if="line['penc_bulan'] > 0">
+                                                        <b t-if="line['is_parent']" t-esc="line['penc_bulan']" t-options='{"widget": "float", "precision": 2}'/>
+                                                        <b>%</b>
+                                                    </t>
+                                                </t>
+                                                <t t-if="not line['is_parent']">
+                                                    <t t-if="line['penc_bulan'] > 0">
+                                                        <span t-esc="line['penc_bulan']" t-options='{"widget": "float", "precision": 2}'/>
+                                                        <span>%</span>
+                                                    </t>
+                                                </t>
                                             </td>
                                             <td class="text-right">
-                                                <b t-if="line['is_parent']" t-esc="line['ending'] * line['sign']" t-options='{"widget": "float", "precision": 2}'/>
-                                                <span t-if="not line['is_parent']" t-esc="line['ending'] * line['sign']" t-options='{"widget": "float", "precision": 2}'/>
+                                                <b t-if="line['is_parent']" t-esc="line['realisasi_upto'] * line['sign']" t-options='{"widget": "float", "precision": 2}'/>
+                                                <span t-if="not line['is_parent']" t-esc="line['realisasi_upto'] * line['sign']" t-options='{"widget": "float", "precision": 2}'/>
                                             </td>
                                             <td class="text-right">
-                                                <b t-if="line['is_parent']" t-esc="line['bulan']" t-options='{"widget": "float", "precision": 2}'/>
-                                                <span t-if="not line['is_parent']" t-esc="line['bulan']" t-options='{"widget": "float", "precision": 2}'/>
+                                                <b t-if="line['is_parent']" t-esc="line['anggaran_upto']" t-options='{"widget": "float", "precision": 2}'/>
+                                                <span t-if="not line['is_parent']" t-esc="line['anggaran_upto']" t-options='{"widget": "float", "precision": 2}'/>
                                             </td>
                                             <td class="text-right">
-                                                <b t-if="line['is_parent']" t-esc="line['per_bulan']" t-options='{"widget": "float", "precision": 2}'/>
-                                                <span t-if="not line['is_parent']" t-esc="line['per_bulan']" t-options='{"widget": "float", "precision": 2}'/>
+                                                <b t-if="line['is_parent']" t-esc="line['penc_upto']" t-options='{"widget": "float", "precision": 2}'/>
+                                                <span t-if="not line['is_parent']" t-esc="line['penc_upto']" t-options='{"widget": "float", "precision": 2}'/>
                                             </td>
                                             <td class="text-right">
-                                                <b t-if="line['is_parent']" t-esc="line['tahun']" t-options='{"widget": "float", "precision": 2}'/>
-                                                <span t-if="not line['is_parent']" t-esc="line['tahun']" t-options='{"widget": "float", "precision": 2}'/>
+                                                <b t-if="line['is_parent']" t-esc="line['anggaran_tahun']" t-options='{"widget": "float", "precision": 2}'/>
+                                                <span t-if="not line['is_parent']" t-esc="line['anggaran_tahun']" t-options='{"widget": "float", "precision": 2}'/>
                                             </td>
                                             <td class="text-right">
-                                                <b t-if="line['is_parent']" t-esc="line['per_tahun']" t-options='{"widget": "float", "precision": 2}'/>
-                                                <span t-if="not line['is_parent']" t-esc="line['per_tahun']" t-options='{"widget": "float", "precision": 2}'/>
+                                                <b t-if="line['is_parent']" t-esc="line['penc_tahun']" t-options='{"widget": "float", "precision": 2}'/>
+                                                <span t-if="not line['is_parent']" t-esc="line['penc_tahun']" t-options='{"widget": "float", "precision": 2}'/>
                                             </td>
-                                            
+
                                         </tr>
 
                                         <t t-set="rownum" t-value="rownum+1" />

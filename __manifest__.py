@@ -35,9 +35,11 @@
         'reports/neraca_base_report.xml',
         'reports/neraca_saldo_report.xml',
         'reports/neraca_lajur_report.xml',
-        'reports/neraca_lajur_report_html.xml',
+        # 'reports/neraca_lajur_report_html.xml',
+        'reports/pencapaian_laba_rugi_report.xml',
         'wizards/neraca_saldo_wizard_view.xml',
         'wizards/neraca_lajur_wizard_view.xml',
+        'wizards/pencapaian_laba_rugi_wizard_view.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

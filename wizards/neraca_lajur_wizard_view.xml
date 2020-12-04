@@ -12,12 +12,12 @@
                         </group>
                         <group>                            
                             <field name="month_period" readonly="1" />
-                            <field name="with_zero_balance" />
+                            <field name="with_zero_balance" invisible="1" />
                         </group>
                     </group>
                     <footer>
                         <!-- <button name="process_wizard" string="Submit" type="object" class="oe_highlight"  /> -->
-                        <button name="action_pdf" string="PDF" type="object" />
+                        <button name="action_pdf" string="Submit" type="object" class="oe_highlight" />
                         <!-- <button name="action_excel" string="Excel" type="object"  /> -->
                         <button string="Cancel" special="cancel"  />
                     </footer>

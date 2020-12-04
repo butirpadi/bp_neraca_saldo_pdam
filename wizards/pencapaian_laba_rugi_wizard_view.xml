@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
-        <record id="pdam_accounting_pdf_report_wizard_view" model="ir.ui.view">
-            <field name="name">neraca.saldo.wizard.view</field>
-            <field name="model">neraca.saldo.wizard</field>
+        <record id="pencapaian_laba_rugi_wizard_view" model="ir.ui.view">
+            <field name="name">pencapaian.laba.rugi.wizard.view</field>
+            <field name="model">pencapaian.laba.rugi.wizard</field>
             <field name="arch" type="xml">
                 <form>
                     <group>
                         <group>
-                            <field name="date_from" string="Date" />
+                            <field name="date_select" string="Date" />
                             <field name="budget_plan_id" />
                             <field name="report_type" invisible="1" />
                         </group>
                         <group>                            
                             <field name="month_period" readonly="1" />
-                            <field name="with_zero_balance" invisible="1" />
-                            <field name="date_to" invisible="1" />
+                            <field name="with_zero_balance" />
                         </group>
                     </group>
                     <footer>
@@ -27,9 +26,9 @@
         </record>
 
         <act_window
-            id="pdam_accounting_pdf_report_wizard_action"
-            res_model="neraca.saldo.wizard"
-            name="Neraca Saldo"
+            id="pencapaian_laba_rugi_wizard_view_action"
+            res_model="pencapaian.laba.rugi.wizard"
+            name="Pencapaian Laba/Rugi"
             view_mode="form"
             multi="True"
             target="new"
@@ -38,16 +37,10 @@
         />
 
         <menuitem
-            id="pdam_accounting_pdf_report_wizard_root_menu"
-            name="Neraca"
-            parent="account.menu_finance_reports"
-            sequence="1"/>
-            
-        <menuitem
-            id="neraca_saldo_menu"
-            name="Neraca Saldo"
-            action="pdam_accounting_pdf_report_wizard_action"
+            id="pencapaian_laba_rugi_wizard_menu"
+            name="Pencapaian Laba/Rugi"
+            action="pencapaian_laba_rugi_wizard_view_action"
             parent="pdam_accounting_pdf_report_wizard_root_menu"
-            sequence="1"/>
+            sequence="3"/>
     </data>
 </odoo>

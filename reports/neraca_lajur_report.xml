@@ -131,34 +131,34 @@
                                     <span t-esc="line['code']" />
                                 </td>
                                 <td class="text-right">
-                                    <span t-if="line['begining_debit'] != 0" t-esc="line['begining_debit']" t-options='{"widget": "float", "precision": 2}'/>
+                                    <span t-if="line['begining_debit'] != 0" t-esc="line['begining_debit'] * line['sign']" t-options='{"widget": "float", "precision": 2}'/>
                                 </td>
                                 <td class="text-right">
-                                    <span t-if="line['begining_credit'] != 0" t-esc="line['begining_credit']" t-options='{"widget": "float", "precision": 2}'/>
+                                    <span t-if="line['begining_credit'] != 0" t-esc="line['begining_credit'] * line['sign']" t-options='{"widget": "float", "precision": 2}'/>
                                 </td>
                                 <td class="text-right">
-                                    <span t-if="line['debit'] != 0" t-esc="line['debit']" t-options='{"widget": "float", "precision": 2}'/>
+                                    <span t-if="line['debit'] != 0" t-esc="line['debit'] * line['sign']" t-options='{"widget": "float", "precision": 2}'/>
                                 </td>
                                 <td class="text-right">
-                                    <span t-if="line['credit'] != 0" t-esc="line['credit']" t-options='{"widget": "float", "precision": 2}'/>
+                                    <span t-if="line['credit'] != 0" t-esc="line['credit'] * line['sign']" t-options='{"widget": "float", "precision": 2}'/>
                                 </td>
                                 <td class="text-right">
-                                    <span t-if="line['ending_debit'] != 0" t-esc="line['ending_debit']" t-options='{"widget": "float", "precision": 2}'/>
+                                    <span t-if="line['ending_debit'] != 0" t-esc="line['ending_debit'] * line['sign']" t-options='{"widget": "float", "precision": 2}'/>
                                 </td>
                                 <td class="text-right">
-                                    <span t-if="line['ending_credit'] != 0" t-esc="line['ending_credit']" t-options='{"widget": "float", "precision": 2}'/>
+                                    <span t-if="line['ending_credit'] != 0" t-esc="line['ending_credit'] * line['sign']" t-options='{"widget": "float", "precision": 2}'/>
                                 </td>
                                 <td class="text-right">
-                                    <span t-if="line['lr_debit'] != 0" t-esc="line['lr_debit']" t-options='{"widget": "float", "precision": 2}'/>
+                                    <span t-if="line['lr_debit'] != 0" t-esc="line['lr_debit'] * line['sign']" t-options='{"widget": "float", "precision": 2}'/>
                                 </td>
                                 <td class="text-right">
-                                    <span t-if="line['lr_credit'] != 0" t-esc="line['lr_credit']" t-options='{"widget": "float", "precision": 2}'/>
+                                    <span t-if="line['lr_credit'] != 0" t-esc="line['lr_credit'] * line['sign']" t-options='{"widget": "float", "precision": 2}'/>
                                 </td>
                                 <td class="text-right">
-                                    <span t-if="line['neraca_debit'] != 0" t-esc="line['neraca_debit']" t-options='{"widget": "float", "precision": 2}'/>
+                                    <span t-if="line['neraca_debit'] != 0" t-esc="line['neraca_debit'] * line['sign']" t-options='{"widget": "float", "precision": 2}'/>
                                 </td>
                                 <td class="text-right">
-                                    <span t-if="line['neraca_credit'] != 0" t-esc="line['neraca_credit']" t-options='{"widget": "float", "precision": 2}'/>
+                                    <span t-if="line['neraca_credit'] != 0" t-esc="line['neraca_credit'] * line['sign']" t-options='{"widget": "float", "precision": 2}'/>
                                 </td>
                                 <t t-set="rownum" t-value="rownum+1" />
                             </tr>
