@@ -1,14 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
+        <record id="account_financial_report_add_group_tree" model="ir.ui.view">
+            <field name="name">account.financial.report.add.group.tree</field>
+            <field name="model">account.financial.report</field>
+            <field name="inherit_id" ref="accounting_pdf_reports.view_account_financial_report_tree" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='account_report_id']" position="after">
+                    <field name="report_group_id"/>
+                    <field name="represent_account_id"/>
+                </xpath>
+            </field>
+        </record>
+
         <record model="ir.ui.view" id="neraca_accounting_pdf_reports_view_account_financial_report_form">
             <field name="name">neraca.accounting_pdf_reports.view.account.financial.report.form</field>
             <field name="model">account.financial.report</field>
             <field name="inherit_id" ref="accounting_pdf_reports.view_account_financial_report_form"/>
             <field name="priority">20</field>
             <field name="arch" type="xml">
+                <xpath expr="//field[@name='style_overwrite']" position="after">
+                    <field name="report_group_id"/>
+                </xpath>
                 <xpath expr="//field[@name='name']/parent::group" position="after">
-                    <group string="Worksheet Options" >
+                    <group string="Worksheet Options">
                         <group>
                             <field name="represent_account_id" />
                             <field name="post_to" widget="radio" />

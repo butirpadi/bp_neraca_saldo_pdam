@@ -9,4 +9,10 @@ class AccountFinancialReport(models.Model):
         string='Represents an account', default=False)
     represent_account_id = fields.Many2one(
         comodel_name='account.account', string='Represented Account')
-    post_to = fields.Selection([("lr","Labar/Rugi"),("neraca","Neraca Akhir")], string='Post to', default="neraca")
+    post_to = fields.Selection(
+        [("lr", "Labar/Rugi"), ("neraca", "Neraca Akhir")], string='Post to', default="neraca")
+    report_group_id = fields.Many2one(
+        comodel_name='account.financial.report',
+        string='Report Group',
+        ondelete='restrict'
+    )
