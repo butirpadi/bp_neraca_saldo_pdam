@@ -23,8 +23,8 @@
                     <field name="report_group_id"/>
                 </xpath>
                 <xpath expr="//field[@name='name']/parent::group" position="after">
-                    <group string="Worksheet Options">
-                        <group>
+                    <group >
+                        <group string="Worksheet Options">
                             <field name="represent_account_id" />
                             <field name="post_to" widget="radio" />
                         </group>
