@@ -16,3 +16,6 @@ class AccountFinancialReport(models.Model):
         string='Report Group',
         ondelete='restrict'
     )
+    show_value = fields.Boolean(string='Show Value', default=True)
+    indentation_style = fields.Selection([("0", "Normal"), ("1", "Tab 1"), (
+        "2", "Tab 2"), ("3", "Tab 3")], string='Indentation Style', default='0')

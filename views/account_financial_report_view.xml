@@ -21,14 +21,16 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='style_overwrite']" position="after">
                     <field name="report_group_id"/>
+                    <field name="indentation_style" />
                 </xpath>
                 <xpath expr="//field[@name='name']/parent::group" position="after">
                     <group >
-                        <group string="Worksheet Options">
+                        <group string="Worksheet Options" name="worksheet_option">
                             <field name="represent_account_id" />
                             <field name="post_to" widget="radio" />
                         </group>
-                        <group>
+                        <group string="Other Options" name="other_option">
+                            <field name="show_value" />
                         </group>
                     </group>
                 </xpath>
