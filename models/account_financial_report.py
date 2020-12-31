@@ -17,5 +17,16 @@ class AccountFinancialReport(models.Model):
         ondelete='restrict'
     )
     show_value = fields.Boolean(string='Show Value', default=True)
-    indentation_style = fields.Selection([("0", "Normal"), ("1", "Tab 1"), (
-        "2", "Tab 2"), ("3", "Tab 3")], string='Indentation Style', default='0')
+    indentation_style = fields.Selection([
+        (0, "Normal"),
+        (1, "Tab 1"),
+        (2, "Tab 2"),
+        (3, "Tab 3")
+    ], string='Indentation Style', default=0)
+    border_style = fields.Selection([
+        (0, "None"),
+        (1, "Top"),
+        (2, "Bottom"),
+        (3, "Top-Bottom")
+    ], string='Border Style', default=0)
+    is_grand_total = fields.Boolean(string='Grand Total', default=False)

@@ -9,6 +9,7 @@
                 <xpath expr="//field[@name='account_report_id']" position="after">
                     <field name="report_group_id"/>
                     <field name="represent_account_id"/>
+                    <field name="sequence"/>
                 </xpath>
             </field>
         </record>
@@ -21,7 +22,9 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='style_overwrite']" position="after">
                     <field name="report_group_id"/>
+                    <field name="is_grand_total"/>
                     <field name="indentation_style" />
+                    <field name="border_style" />
                 </xpath>
                 <xpath expr="//field[@name='name']/parent::group" position="after">
                     <group >
