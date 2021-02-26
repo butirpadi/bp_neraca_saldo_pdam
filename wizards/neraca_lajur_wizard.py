@@ -121,6 +121,13 @@ class NeracaLajurWizard(models.TransientModel):
         return res
 
     def _get_report_line(self):
+        print('-------------------------------------------')
+        print('GET REPORT LINE')
+        print('-------------------------------------------')
+
+        print(self.date_from)
+        print(self.date_to)
+
         report_line = []
 
         acc_financial_report = self.company_id.neraca_lajur_report_id
@@ -206,21 +213,28 @@ class NeracaLajurWizard(models.TransientModel):
             elif report_item.type == 'account_report':
                 report_line.append(vals.copy())
 
+        pprint(report_line)
         return report_line
 
     def action_submit(self, doc_type):
         if self.company_id.neraca_lajur_report_id:
             # set date periode
-            last_day = monthrange(self.date_from.year, self.date_from.month)
+            last_day = monthrange(self.date_period.year, self.date_period.month)
 
             first_date = datetime.datetime(
-                year=self.date_period.year, month=self.date_from.month, day=1)
+                year=self.date_period.year, month=self.date_period.month, day=1)
             last_date = datetime.datetime(
-                year=self.date_period.year, month=self.date_from.month, day=last_day[1])
+                year=self.date_period.year, month=self.date_period.month, day=last_day[1])
 
-            self.date_from = first_date.date()
-            self.date_to = last_date.date()
-            self.month_period = self.date_from.strftime("%B %Y")
+            # self.date_from = first_date.date()
+            # self.date_to = last_date.date()
+            # self.month_period = self.date_period.strftime("%B %Y")
+
+            self.write({
+                'date_from' : first_date.date(),
+                'date_to' : last_date.date(),
+                'month_period' : self.date_period.strftime("%B %Y")
+            })
 
             if doc_type == 'pdf':
                 return self.env.ref('bp_neraca_saldo_pdam.action_report_neraca_lajur_pdam').report_action(self)
