@@ -7,7 +7,7 @@
                     <h4 id="report-title">NERACA LAJUR</h4>
                     <span id="report-sub-title" style="font-size:12pt;">
                         <span>Per </span>
-                        <span t-esc="doc.date_to.strftime('%d %B %Y')" />
+                        <span t-esc="doc.date_period.strftime('%d %B %Y')" />
                     </span>
                 </center>
             </div>
